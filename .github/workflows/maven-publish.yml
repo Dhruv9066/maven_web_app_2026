@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: Dhruv9066/github_action_k8
-          ref: main
+          ref: master
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Verify Repository
