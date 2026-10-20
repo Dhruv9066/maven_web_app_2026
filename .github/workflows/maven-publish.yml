@@ -1,0 +1,27 @@
+name: GitOps Authentication Test
+on:
+  workflow_dispatch:
+jobs:
+  gitops:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: Dhruv9066
+          repositories: github_action_k8
+          permission-contents: write
+          
+      - name: Checkout GitOps Repository
+        uses: actions/checkout@v6
+        with:
+          repository: Dhruv9066/github_action_k8
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Verify Repository
+        run: ls -la
